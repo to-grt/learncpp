@@ -1,0 +1,76 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "g++ build active file (debug)",
+            "type": "shell",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-std=c++20",
+                "-ggdb",
+                "-O0",
+                "-pedantic-errors",
+                "-Wall",
+                "-Weffc++",
+                "-Wextra",
+                "-Wconversion",
+                "-Wsign-conversion",
+                "-Werror",
+                "${file}",
+                "-o",
+                "${workspaceFolder}/build/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Compile the file in the active editor into build/"
+        },
+        {
+            "label": "g++ build active file (release)",
+            "type": "shell",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-std=c++20",
+                "-O2",
+                "-DNDEBUG",
+                "-pedantic-errors",
+                "-Wall",
+                "-Weffc++",
+                "-Wextra",
+                "-Wconversion",
+                "-Wsign-conversion",
+                "-Werror",
+                "${file}",
+                "-o",
+                "${workspaceFolder}/build/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": "build",
+            "detail": "Optimized build of the file in the active editor"
+        },
+        {
+            "label": "run active file",
+            "type": "shell",
+            "command": "${workspaceFolder}/build/${fileBasenameNoExtension}",
+            "dependsOn": "g++ build active file (debug)",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}
